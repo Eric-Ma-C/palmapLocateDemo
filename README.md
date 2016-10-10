@@ -1,10 +1,10 @@
-须知：本文档用于说明如何在已有项目中加入图聚蓝牙定位功能，如需其他功能请参考图聚官网开放平台https://www.ipalmap.com/docs/
+须知：本文档用于说明如何在已有项目中加入图聚蓝牙定位功能，如需其他功能请参考https://www.ipalmap.com/docs/
 
 一、开发环境配置
 
 1.创建待添加定位功能的Android工程
 
-2.将图聚sdk中libs文件夹下的所有内容拷贝到项目的libs
+2.将图聚sdk中Nagrand-ble.jar拷贝到项目的libs
   将resources/lua文件夹下的所有内容拷贝到项目的SD卡目录下/Nagrand/
   将resources/media文件夹下的所有内容拷贝到项目的assets
 
@@ -16,14 +16,8 @@
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
-4.在onCreate中添加代码：
-  初始化引擎
-    Engine engine = Engine.getInstance(); //初始化引擎
-    engine.startWithLicense(Constant.APP_KEY, this); //设置验证license，可以通过开发者平台去查找自己的license
-  初始化DataSource，用于向服务器获取地图数据
-    final DataSource dataSource = new DataSource("http://api.ipalmap.com/"); //填写服务器的URL
 
-5.初始化蓝牙定位
+4.初始化蓝牙定位
 
 BeaconPositioningManager pm = new BeaconPositioningManager( // 蓝牙定位管理对象
             this,
@@ -34,7 +28,7 @@ BeaconPositioningManager pm = new BeaconPositioningManager( // 蓝牙定位管�
 
 <service android:name="com.palmaplus.nagrand.position.ble.BeaconService"></service>
 
-6.设置定位回调
+5.设置定位回调
 在完成BeaconPositioningManager的创建后我们需要监听一个位置改变的接口，以用来获取新的位置。
 pm.setOnLocationChangeListener(
         new PositioningManager.OnLocationChangeListener<BleLocation>() {
@@ -59,3 +53,4 @@ pm.setOnLocationChangeListener(
     
             });
 pm.start();
+
